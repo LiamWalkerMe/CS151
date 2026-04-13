@@ -33,66 +33,136 @@ using namespace std;
 
 int main() {
 
-    int const kArray_Size = 20;
-
+    // Random number generation
     mt19937 gen(10);
     uniform_int_distribution<> distrib(1, 99);
-    
-    int one_dimension[kArray_Size];
 
+    // ONE DIMENSIONAL ARRAY
+
+    // Define variable
+    int const kArray_Size = 20;
+    int* single_array = new int[kArray_Size];
     double total = 0;
 
+    //Loop through arrray and assign random number, add to running total
     for (int i = 0; i < 20; i++) {
         int random_number = distrib(gen);
-        one_dimension[i] = random_number;
+        single_array[i] = random_number;
         total += random_number;
     }
+
+    // Display One Dimensional Array
     
-    cout << "One Dimensional Array:" << endl;
+    cout << endl << "Original array of 20 numbers:" << endl << "[";
     
     for (int i = 0; i < kArray_Size; i++) {
-        cout << "Position " << i + 1 << ": " << one_dimension[i] << endl;
+        if (i == kArray_Size - 1) {
+            cout << single_array[i];
+        } else {
+            cout << single_array[i] << ", ";
+        }
+        
     }
+    cout << "]" << endl;
     
-    cout << setfill('=') << setw(10) << "" << endl;
-    cout << setfill(' ') << "Total: " << total << endl;
-    cout << "Average: " << fixed << setprecision(2) << total/kArray_Size << endl;
-    cout << setfill('=') << setw(10) << "" << setfill(' ') << endl;
+    cout << setfill('=') << setw(78) << "" << endl;
+    cout << setfill(' ') << "Total: " << total
+         << "  Average: " << fixed << setprecision(2) << total/kArray_Size << endl;
+    cout << setfill(' ') << endl << endl;
 
     int const kHeight = 4;
     int const kWidth = 5;
 
-    int *two_dimensional = new int[kHeight * kWidth];
-    for (int row = 0; row < kHeight; row++) {
-        for(int col = 0; col < kWidth; col++) {
-            int index = (row * kWidth) + col;
-            two_dimensional[index] = one_dimension[index];
-        }
-    }
+    // TWO DIMENSIONAL ARRAY (Technique 1)
 
+    cout << "Using that array as a 4 x 5 array: " << endl;
 
-    int row_total = 0;
+    
+    //Treat the 1st array like a two dimensional array and display
+    double row_total = 0;
+    total = 0;
     for (int row = 0; row < kHeight; row++) {
         row_total = 0;
-        cout << "Row: ";
+
+        cout << left << setw(3) << "Row " << row << ": ";
 
         for(int col = 0; col < kWidth; col++) {
             int index = (row * kWidth) + col;
-            int row_value = two_dimensional[index];
+            int row_value = single_array[index];
             row_total += row_value;
-            cout << setw(4) << row_value;
+            cout << right << setw(2) << row_value << "  ";
 
             
         }
-        cout << "   Row Total: " << row_total << endl;
+        // Calculate and display row totals and averages
+        total += row_total;
+        cout << setw(6) << left << "Total: " << (int)row_total ;
+        cout << setw(6) << left << "  Average: " << fixed << row_total/kWidth << endl;
+        
 
     }
 
+    // Calculate and display totals and averages
+    cout << setfill('=') << setw(53) << "" << setfill(' ') << endl;
+    cout << setw(21) << " " 
+         << setw(12) << "Grand Total: " << (int)total
+         << "  Average: " << total/kArray_Size;
+
+    cout << endl << endl;
+
+    // TWO DIMENSIONAL ARRAY (Technique 2)
+
+    cout << "Using an array-of-arrays: " << endl;
+
+    //Set up array of arrays
+    int **array_of_arrays = new int * [kHeight] ;
+    for (int row = 0; row < kHeight; row++) {
+        array_of_arrays[row] = new int[kWidth];
+    }
+
+    //Copy 1st array to new array
+    for (int row = 0; row < kHeight; row++) {
+        
+        for(int col = 0; col < kWidth; col++) {
+            int index = (row * kWidth) + col;
+            array_of_arrays[row][col] = single_array[index];
+            
+        }
+
+    }
+
+    // Loop through array and grab the associated variables
+    row_total = 0;
+    total = 0;
+    for (int row = 0; row < kHeight; row++) {
+        row_total = 0;
+
+        cout << left << setw(3) << "Row " << row << ": ";
+
+        for(int col = 0; col < kWidth; col++) {
+            int row_value = array_of_arrays[row][col];
+            row_total += row_value;
+            cout << right << setw(2) << row_value << "  ";
+
+            
+        }
+        // Calculate and display row totals and averages
+        total += row_total;
+        cout << setw(6) << left << "Total: " << (int)row_total ;
+        cout << setw(6) << left << "  Average: " << fixed << row_total/kWidth << endl;
+        
+
+    }
+
+    // Calculate and display totals and averages
+    cout << setfill('=') << setw(53) << "" << setfill(' ') << endl;
+    cout << setw(21) << " " 
+         << setw(12) << "Grand Total: " << (int)total
+         << "  Average: " << total/kArray_Size;
+
+    cout << endl << endl;
 
 
-    
-
-    
 
 
     return 0;

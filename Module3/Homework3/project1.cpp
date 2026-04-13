@@ -107,7 +107,7 @@ int main() {
     scoreSort(ptr, numStudents);
 
     cout << endl <<  "Sorted Scores: " << endl;
-    cout << "--------------" << endl;
+    cout << "-----------------" << endl;
     cout << setw(10) << left << "Name: ";
     cout << setw(10) << left << "Score: " << endl;
 
@@ -115,12 +115,12 @@ int main() {
     //Display the sorted scores
     for (int i = 0; i < numStudents; i++) {
         cout << setw(10) << left << (ptr + i)->getName();
-        cout << setw(10) << left << (ptr + i)->getScore() << endl;
+        cout << setw(6) << right << (ptr + i)->getScore() << endl;
     }
 
     //Calculate and display the average score
-    cout << "--------------" << endl;
-    cout << "Average: " << scoreAverage(ptr, numStudents) << endl << endl;
+    cout << "-----------------" << endl;
+    cout << setw(10) << "Average: " << setw(6) << right << scoreAverage(ptr, numStudents) << endl;
 
     delete[] arr;
 
@@ -144,6 +144,8 @@ void scoreSort(Student *ptr, int numStudents) {
             }
         }
     }
+
+    
 
 }
 
