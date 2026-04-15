@@ -38,6 +38,8 @@
 #include <cctype>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <ctime>
 using namespace std;
 
 string normalizeDescription(const char description[]) {
@@ -59,6 +61,8 @@ int main() {
         int quantity;
         double wholesale_price;
         double sale_price;
+        char date[11];
+
 
 
     };
@@ -120,6 +124,11 @@ int main() {
                 cin >> item.sale_price;
             }
 
+            // Grab the current date and store it as MM/DD/YYYY.
+            time_t now = time(nullptr);
+            tm* localTime = localtime(&now);
+            strftime(item.date, sizeof(item.date), "%m/%d/%Y", localTime);
+
             // Write one complete inventory record to the binary file.
             outputFile.write(reinterpret_cast<const char*>(&item), sizeof(item));
             outputFile.close();
@@ -164,6 +173,13 @@ int main() {
                 continue;
             }
 
+            // Sort alphabetically when there are three or more items.
+            if (items.size() >= 3) {
+                sort(items.begin(), items.end(), [](const inventory& a, const inventory& b) {
+                    return normalizeDescription(a.item_description) < normalizeDescription(b.item_description);
+                });
+            }
+
             // Show the user a numbered list so they can choose one item.
             cout << "\nAvailable Inventory Items\n";
             cout << "-------------------------\n";
@@ -192,6 +208,7 @@ int main() {
                  << selectedItem.wholesale_price << '\n';
             cout << left << setw(18) << "Sale Price:" << fixed << setprecision(2)
                  << selectedItem.sale_price << '\n';
+            cout << left << setw(18) << "Date Added:" << selectedItem.date << '\n';
         } else if (option == 3) {
             cout << "\nGoodbye.\n";
             break;
