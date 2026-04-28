@@ -56,17 +56,9 @@ int recursiveBinaryToDecimal(string s) {
 
 int iterativeBinaryToDecimal(string n) {
     int decimalValue = 0;
-    int power = 1; // Represents the current power of 2 (1, 2, 4, 8, etc.)
-    // Loop through the binary string from right to left
-    for (int i = n.length() - 1; i >= 0; i--) {
-        // Convert the current character to an integer (0 or 1)
+    for (int i = 0; i < n.length(); i++) {
         int digit = n[i] - '0';
-        // Update the decimal value by adding the current digit multiplied by the current power of 2
-        decimalValue += digit * power;
-        // Update the power of 2 for the next iteration
-        power *= 2;
+        decimalValue = decimalValue * 2 + digit;
     }
-
     return decimalValue;
-
 }

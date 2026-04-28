@@ -18,7 +18,7 @@
 using namespace std;
 
 
-long long recursiveFactoral(long long n);
+long long iterativeFactoral(long long n);
 
 int main() {
 
@@ -36,8 +36,8 @@ int main() {
             break;
         }
 
-        // Call the recursive function to calculate the factorial of the input and display the result.
-        cout << "The factorial of " << n << " is: " << recursiveFactoral(n) << endl;
+        // Call the iterative function to calculate the factorial of the input and display the result.
+        cout << "The factorial of " << n << " is: " << iterativeFactoral(n) << endl;
 
 
     }
@@ -47,13 +47,17 @@ int main() {
     return 0;
 }
 
-// Implement the recursive function to calculate the factorial of a number, with a base case for 0 and 1, and a recursive case for n > 1.
-long long recursiveFactoral(long long n) {
+// Implement the iterative function to calculate the factorial of a number.
+long long iterativeFactoral(long long n) {
     // Base Case: If n is 0 or 1, return 1
     if (n == 0 || n == 1) {
         return 1;
     }
 
-    // Recursive Case: n! = n * (n - 1)!
-    return n * recursiveFactoral(n - 1);
+    // Iterative Case: Calculate factorial using a loop
+    long long result = 1;
+    for (long long i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
 }
