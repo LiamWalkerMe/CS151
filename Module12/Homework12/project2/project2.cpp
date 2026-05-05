@@ -24,9 +24,9 @@ using namespace std;
 class AbstractSeq {
 
     public:
-        void printSeq(int low, int high);  
+        void printSeq(int low, int high);
         int sumSeq(int low, int high);
-        virtual int fun(int value) = 0;    
+        virtual int fun(int value) = 0;
 
 };
 

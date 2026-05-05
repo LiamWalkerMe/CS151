@@ -34,21 +34,28 @@ class AbstractSort {
 // My favorite sorting algorithm!
 class BubbleSort : public AbstractSort {
     public:
-    int comparisons;
-    
-    void sort(int arr[ ], int size ) override {
-        comparisons = 0; // Initialize comparisons counter
-        for (int i = 0; i < size - 1; i++) {
-            for (int j = 0; j < size - i - 1; j++) {
-                comparisons++; // Increment comparisons counter for each comparison
-                if (compare(arr, j, j + 1) > 0) {
-                    swap(arr[j], arr[j + 1]);
-                    comparisons++; // Increment comparisons counter for each swap
+        int comparisons;
+
+        void sort(int arr[ ], int size ) override {
+            comparisons = 0; // Initialize comparisons counter
+            for (int i = 0; i < size - 1; i++) {
+                bool swapped = false;
+
+                for (int j = 0; j < size - i - 1; j++) {
+                    comparisons++; // Increment comparisons counter for each comparison
+                    if (compare(arr, j, j + 1) > 0) {
+                        swap(arr[j], arr[j + 1]);
+                        comparisons++; // Increment comparisons counter for each swap
+                        swapped = true;
+                    }
                 }
+
+                if (!swapped) {
+                    break;
                 }
             }
         }
-        
+
 };
 
 // Compare function to compare two elements in the array
@@ -137,5 +144,3 @@ int main()
 
     return 0;
 }
-
-
